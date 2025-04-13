@@ -26,7 +26,7 @@ const HealthForm = () => {
 
     try {
       const response = await axios.post('https://vridhamitra.onrender.com/user-health/', formData, {
-          withCredentials: true,   
+          withCredentials: false,   
       });
       console.log("Data Uploaded Successfully", response.data.message);
       // navigate("/login")

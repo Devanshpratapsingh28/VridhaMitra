@@ -34,7 +34,7 @@ function Signup() {
         formData.append("address", addressRef.current.value);
 
         try {
-            const response = await axios.post('/sign-up/', formData, {
+            const response = await axios.post('https://vridhamitra.onrender.com/sign-up/', formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             console.log("Data Uploaded Successfully", response.data.message);
