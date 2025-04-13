@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./admin.css";
 import Headerr from "../components/Headerr";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom"; 
+import axios from "axios";
 
 function Admin() {
   const emailValue = useSelector((store) => store.email);
   const navigate = useNavigate(); 
   console.log(emailValue);
+
+  const emailValue = useSelector((store) => store.email)
+  let usersArray=[]
+  console.log(emailValue)
 
   const users = [
     { id: 1, status: "Do/MM/YYYY", recentCheck: 2 },
@@ -17,10 +22,22 @@ function Admin() {
     { id: 5, status: "Do/MM/YYYY", recentCheck: 2 },
   ];
 
+
   const handleAddUser = () => {
     navigate('/admin-home/add-user'); 
   };
 
+  useEffect(()=>{
+    const fetchUsers=async()=>{
+      const usersData=await axios.post('http://127.0.0.1:3000/get-users',{
+        email:emailValue.email
+      })
+      console.log(usersData)
+      usersArray=usersData.usersArray;
+    }
+    fetchUsers()
+    console.log(usersArray)
+  },[])
   return (
     <div className="app">
       <Headerr/>

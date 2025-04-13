@@ -21,8 +21,20 @@ const HealthForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await axios.post('http://127.0.0.1:3000/user-health/', formData, {
+          withCredentials: true,   
+      });
+      console.log("Data Uploaded Successfully", response.data.message);
+      // navigate("/login")
+
+  } catch (e) {
+      console.log("Data could not be uploaded", e);
+      toast.error(e.response.data.message)
+  }
     console.log('Form submitted:', formData);
     // Add your form submission logic here
     alert('Patient registration successful!');
@@ -154,7 +166,7 @@ const HealthForm = () => {
             />
           </div>
           
-          <button type="submit" className="submit-btn">Sign Up</button>
+          <button onSubmit={handleSubmit} type="submit" className="submit-btn">Sign Up</button>
         </form>
       </div>
     </div>
