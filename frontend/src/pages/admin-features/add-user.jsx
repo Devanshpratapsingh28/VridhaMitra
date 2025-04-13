@@ -17,7 +17,7 @@ function AddUserForm() {
     const guardianMailRef = useRef();
     const emergencyNumberRef = useRef();
     const emergencyAddressRef = useRef();
-    const recentLocRef = useRef();
+    // const recentLocRef = useRef();
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -34,10 +34,10 @@ function AddUserForm() {
         formData.append("guardianMail", guardianMailRef.current.value);
         formData.append("emergencyNumber", emergencyNumberRef.current.value);
         formData.append("emergencyAddress", emergencyAddressRef.current.value);
-        formData.append("recentLoc", recentLocRef.current.value.split(","));
+        // formData.append("recentLoc", recentLocRef.current.value.split(","));
 
         try {
-            const response = await axios.post("http://127.0.0.1:3000/admin/add-user", formData, {
+            const response = await axios.post("http://127.0.0.1:3000/add-user/", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             toast.success("User added successfully!");
@@ -59,7 +59,7 @@ function AddUserForm() {
         guardianMailRef.current.value = "";
         emergencyNumberRef.current.value = "";
         emergencyAddressRef.current.value = "";
-        recentLocRef.current.value = "";
+        // recentLocRef.current.value = "";
     };
 
     const handleBack = () => {
@@ -97,7 +97,7 @@ function AddUserForm() {
                 <input type="email" ref={guardianMailRef} placeholder="Guardian Email" required />
                 <input type="number" ref={emergencyNumberRef} placeholder="Emergency Number" required />
                 <input type="text" ref={emergencyAddressRef} placeholder="Emergency Address" required />
-                <input type="text" ref={recentLocRef} placeholder="Recent Locations (comma-separated)" required />
+                {/* <input type="text" ref={recentLocRef} placeholder="Recent Locations (comma-separated)" required /> */}
                 <button type="submit">Submit</button>
             </form>
         </>

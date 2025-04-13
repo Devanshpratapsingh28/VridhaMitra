@@ -7,7 +7,7 @@ import { emailActions } from '../../store/emailSlice';
 
 function Login() {
     const navigate = useNavigate()
-
+    const dispatch=useDispatch()
     const emailValue = useSelector((store) => store.email)
 
     function login() {

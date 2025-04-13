@@ -6,7 +6,7 @@ config({ path: "config.env" });
 
 mongoose.connect(process.env.mongodbConnect)
 
-const adminUserSchema = mongoose.Schema({
+const userSchema = mongoose.Schema({
     name : {
         type : String,
         required : true,
@@ -51,11 +51,15 @@ const adminUserSchema = mongoose.Schema({
         type : String,
         required : true,
     },
-    recentLoc : {
-        type : Array,
-        required : true,
+    latitude : {
+        type : Number,
     },
+    
+    longitude : {
+        type : Number,
+    },
+    otp: Number
     
 })
 
-export const AdminUser = mongoose.model("AdminUser", adminUserSchema)
+export const User = mongoose.model("User", userSchema)

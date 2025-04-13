@@ -5,6 +5,10 @@ import multer from "multer";
 import { Admin } from "./models/admin/admin.js";
 import { Volunteer } from "./models/volunteer/volunteer.js";
 import { sendOtp } from "./utils/sendOtp.js";
+import { User } from "./models/user/user.js";
+import { Health } from "./models/user/user-health.js";
+import { Fundraiser } from "./models/user/user-funds.js";
+import { Travel } from "./models/user/user-travel.js";
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -49,6 +53,32 @@ router.post("/login", async (req, res) => {
   otp = Number(otp);
 
   if (type == "admin") {
+    const admin = await Admin.findOne({ email });
+    if (!admin) {
+      res.status(404).json({
+        message: "Not a Valid User. Please Sign-up instead!",
+      });
+    } else {
+      await Admin.findOneAndUpdate({ email: email }, { $set: { otp: otp } });
+    }
+    try {
+      await sendOtp({
+        subject: "VRIDHA MITR OTP",
+        receiver: email,
+        otp,
+      });
+      res.status(200).json({
+        success: true,
+        message: "OTP sent successfully",
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: "Internal Server Error. Please try after some time.",
+      });
+    }
+  }
+  if (type == "user") {
     const admin = await Admin.findOne({ email });
     if (!admin) {
       res.status(404).json({
@@ -195,7 +225,21 @@ app.post("/otp-verify", async (req, res) => {
   }
   if (type == "volunteer") {
     let checkUser = await Admin.findOne({ email: receiver });
-    premium = checkUser.premium;
+
+    if (checkUser.otp == otp) {
+      res.json({
+        success: true,
+        message: "User Authorized ",
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: "OTP is incorrect. ",
+      });
+    }
+  }
+  if (type == "user") {
+    let checkUser = await User.findOne({ email: receiver });
 
     if (checkUser.otp == otp) {
       res.json({
@@ -211,6 +255,235 @@ app.post("/otp-verify", async (req, res) => {
   }
 });
 
+app.post('/update-location',async(req,res)=>{
+  const{email, lat, long}=req.body;
+  try{
+    await User.findOneAndUpdate(
+      {email:email},
+      { $set: { 
+        latitude: lat,
+        longitude: long
+       } }
+    )
+    res.json({
+      message: "Data Received Successfully",
+    });
+  } catch(e){
+    console.error("Error not found user:", error);
+    res.status(500).send({ message: "User not found" });
+  }
+})
+
+app.post('/get-users', async(req,res)=>{
+  const {email}=req.body;
+  try{
+    const user=await Admin.findOne(
+      {email},
+    )
+    console.log(user)
+    res.json({
+      usersArray : user.usersId,
+      message: "Data Received Successfully",
+    });
+  } catch(e){
+    console.error("Error not found user:", e);
+    res.status(500).send({ message: "User not found" });
+  }
+})
+
+
+app.post('/user-health',async(req,res)=>{
+
+  const { name, age, email, mobile,emergency_contact, medical_history, blood_group, address } = req.body;
+
+  const user=await Health.findOne({email})
+      if(user){
+          res.status(404).json({
+              message:"This data for this user is already registered!"
+          })
+      } else{
+          await Health.create({
+              name: name,
+              age: age,
+              mobileNumber: mobile,
+              email: email,
+              address: address,
+              emergencyContact: emergency_contact,
+              bloodGroup: blood_group,
+              address: address,
+              medicalHistory: medical_history,
+            });
+      }
+      res.json({
+        message: "Data Received Successfully",
+      });
+})
+
+app.post('/travel', upload.fields([{ name: "photo" }]),async(req,res)=>{
+
+  const photo = req.files["photo"][0];
+const { name, age, gender, mobileNumber, email , medicalConditions, source, destination, date, travelMode, specialRequirements, estimatedTravelCost, reimbursement, reimbursementAmount} = req.body;
+
+const user=await Travel.findOne({email})
+    if(user){
+        res.status(404).json({
+            message:"You already have one ongoing request!"
+        })
+    } else{
+        await Travel.create({
+            name: name,
+            age: age,
+            gender: gender,
+            mobileNumber: mobileNumber,
+            email: email,
+            photo: {
+              data: photo.buffer,
+              contentType: photo.mimetype,
+            },
+            medicalConditions: medicalConditions,
+            source: source,
+
+            destination:destination,
+            date:date,
+
+            travelMode:travelMode,
+            specialRequirements:specialRequirements,
+            estimatedTravelCost:estimatedTravelCost,
+            reimbursement:reimbursement,
+            reimbursementAmount:reimbursementAmount,
+          });
+    }
+    res.json({
+      message: "Data Received Successfully",
+    });
+})
+
+
+app.post('/fundraiser', upload.fields([{ name: "photo" }, { name: "qrcode" }]),async(req,res)=>{
+
+    const photo = req.files["photo"][0];
+    const qrcode = req.files["qrcode"][0];
+  const { name, age, gender, mobileNumber, need, story, specificRequirement, duedate, amount, urgency, upiid , email } = req.body;
+
+  const user=await Fundraiser.findOne({email})
+      if(user){
+          res.status(404).json({
+              message:"You already have one ongoing request!"
+          })
+      } else{
+          await Fundraiser.create({
+              name: name,
+              age: age,
+              gender: gender,
+              mobileNumber: mobileNumber,
+              email: email,
+              photo: {
+                data: photo.buffer,
+                contentType: photo.mimetype,
+              },
+              idPhoto: {
+                data: qrcode.buffer,
+                contentType: qrcode.mimetype,
+              },
+              need: need,
+              story: story,
+              specificRequirement: specificRequirement,
+              duedate: duedate,
+              amount: amount,
+              urgency: urgency,
+              upiid: upiid,
+            });
+      }
+      res.json({
+        message: "Data Received Successfully",
+      });
+})
+
+
+app.post('/user-health',async(req,res)=>{
+
+  const { name, age, email, mobile,emergency_contact, medical_history, blood_group, address } = req.body;
+
+  const user=await Health.findOne({email})
+      if(user){
+          res.status(404).json({
+              message:"This data for this user is already registered!"
+          })
+      } else{
+          await Health.create({
+              name: name,
+              age: age,
+              mobileNumber: mobile,
+              email: email,
+              address: address,
+              emergencyContact: emergency_contact,
+              bloodGroup: blood_group,
+              address: address,
+              medicalHistory: medical_history,
+            });
+      }
+      res.json({
+        message: "Data Received Successfully",
+      });
+})
+
+app.post('/add-user', upload.fields([{ name: "photo" }, { name: "idPhoto" }]),async(req,res)=>{
+    const { name, age, gender, email, mobileNumber, address, guardianMail, emergencyNumber, emergencyAddress } = req.body;
+    const photo = req.files["photo"][0];
+    const idPhoto= req.files["idPhoto"][0];
+    const user=await User.findOne({email})
+        if(user){
+            res.status(404).json({
+                message:"This user is already registered!"
+            })
+            return;
+        } else{
+            await User.create({
+                name: name,
+                age: age,
+                gender: gender,
+                mobileNumber: mobileNumber,
+                email: email,
+                address: address,
+                photo: {
+                  data: photo.buffer,
+                  contentType: photo.mimetype,
+                },
+                idPhoto: {
+                  data: idPhoto.buffer,
+                  contentType: idPhoto.mimetype,
+                },
+                guardianMail:guardianMail,
+                emergencyAddress:emergencyAddress,
+                emergencyNumber:emergencyNumber,
+              });
+        }
+        console.log(guardianMail)
+
+        const admin=await Admin.findOne({email: guardianMail})
+        const usersSet=new Set();
+        let usersid=admin.usersId;
+        if(usersid===undefined){
+          usersSet.add(email)
+        } else{
+          for(const user of usersid){
+            usersSet.add(user);
+          }
+          usersSet.add(email)
+        }
+        console.log(typeof(usersSet)+" wow "+usersSet)
+        const usersArray=Array.from(usersSet)
+        console.log(usersArray)
+
+        await Admin.findOneAndUpdate({guardianMail},{
+          $set: { 
+            usersId: usersArray
+           } 
+        })
+        res.json({
+          message: "Data Received Successfully",
+        });
+})
 router.post("/file", async (req, res) => {
   try {
     const { email } = req.body;
