@@ -1,8 +1,10 @@
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom"; 
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 
 function TravelForm() {
+    const navigate = useNavigate(); 
     const nameRef = useRef();
     const ageRef = useRef();
     const genderRef = useRef();
@@ -68,22 +70,49 @@ function TravelForm() {
         reimbursementAmountRef.current.value = "";
     };
 
+    const handleBack = () => {
+        navigate('/user-home'); // Navigate back to user.jsx
+    };
+
     return (
         <>
             <ToastContainer />
-            <h1>Travel Request Form</h1>
+            <div style={{ 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'start',
+                marginBottom: '20px',
+                flexDirection:'column'
+            }}>
+                <h1>Travel Request Form</h1>
+                <button 
+                    onClick={handleBack}
+                    style={{
+                        padding: '16px 16px',
+                        backgroundColor: 'black',
+                        color:'white',
+                        border: '1px solid #ccc',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        fontWeight: '500'
+                    }}
+                >
+                    ← Back
+                </button>
+            </div>
             <form onSubmit={handleFormSubmit}>
                 <input type="text" ref={nameRef} placeholder="Name" required />
                 <input type="text" ref={ageRef} placeholder="Age" required />
-                <div>
-                    <label>
-                        <input type="checkbox" value="Male" ref={genderRef} /> Male
+                <div style={{ margin: '10px 0' }}>
+                    <label style={{ marginRight: '15px' }}>
+                        <input type="radio" name="gender" value="Male" ref={genderRef} /> Male
+                    </label>
+                    <label style={{ marginRight: '15px' }}>
+                        <input type="radio" name="gender" value="Female" ref={genderRef} /> Female
                     </label>
                     <label>
-                        <input type="checkbox" value="Female" ref={genderRef} /> Female
-                    </label>
-                    <label>
-                        <input type="checkbox" value="Other" ref={genderRef} /> Other
+                        <input type="radio" name="gender" value="Other" ref={genderRef} /> Other
                     </label>
                 </div>
                 <input type="number" ref={mobileNumberRef} placeholder="Mobile Number" required />
@@ -96,11 +125,25 @@ function TravelForm() {
                 <input type="text" ref={travelModeRef} placeholder="Travel Mode" required />
                 <input type="text" ref={specialRequirementsRef} placeholder="Special Requirements" required />
                 <input type="number" ref={estimatedTravelCostRef} placeholder="Estimated Travel Cost" required />
-                <label>
+                <label style={{ display: 'block', margin: '10px 0' }}>
                     <input type="checkbox" ref={reimbursementRef} /> Reimbursement Needed
                 </label>
                 <input type="number" ref={reimbursementAmountRef} placeholder="Reimbursement Amount" />
-                <button type="submit">Submit</button>
+                <button 
+                    type="submit"
+                    style={{
+                        padding: '10px 20px',
+                        backgroundColor: '#4CAF50',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontSize: '16px',
+                        marginTop: '20px'
+                    }}
+                >
+                    Submit
+                </button>
             </form>
         </>
     );
