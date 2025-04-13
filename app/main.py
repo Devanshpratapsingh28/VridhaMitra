@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 import os
 from datetime import datetime
 from typing import Optional
-from data import predict_output as op
+from app.data import predict_output as op
 
 app = FastAPI()
 
