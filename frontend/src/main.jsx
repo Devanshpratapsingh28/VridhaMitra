@@ -21,6 +21,7 @@ import Travel from './pages/user-features/travel.jsx'
 import Fundraiser from './pages/user-features/fundraiser.jsx'
 import AddUserForm from './pages/admin-features/add-user.jsx'
 import TravelRequests from './pages/user-features/TravelRequests.jsx'
+import AddUserForm from './pages/admin-features/add-user.jsx'
 // import OTPVerify from './pages/otp-verify.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -41,6 +42,7 @@ createRoot(document.getElementById('root')).render(
           <Route path='/user-home/travel-requests' element={<TravelRequests />} />
           <Route path='/admin-home' element={<Admin />} />
           <Route path='/admin-home/add-user' element={<AddUserForm />} />
+
         </Routes>
         <ToastContainer theme="dark" position='top-right' />
 
