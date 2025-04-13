@@ -2,7 +2,7 @@ import nodemailer from "nodemailer"
 
 export const sendMail = async (mailData)=>{
 
-
+    console.log(mailData)
     const transporter = nodemailer.createTransport({
             host:process.env.SMTP_HOST,
             port:process.env.SMTP_PORT,
@@ -17,22 +17,23 @@ export const sendMail = async (mailData)=>{
         try{
             transporter.sendMail({
                from:process.env.SMTP_MAIL,
-               to:process.env.SMTP_MAIL_RECEIVER,
+               to:mailData.guardianMail,
                subject:mailData.subject,
-               text:"Name : "+mailData.name+"\n Number : "+mailData.number+"\n Email : "+mailData.mail+"\n Message : "+mailData.message,
+               text:"Name : "+mailData.name+"\n Number : "+mailData.mobilenumber+"\n Email : "+mailData.email+"\n Message : Reach this Location immediately: \n"+mailData.newsrc,
            },
 
            );
        }
        catch(error){
+        console.log(error)
        }
 
        try{
         transporter.sendMail({
            from:process.env.SMTP_MAIL,
-           to:mailData.mail,
-           subject:"From Saim Jawed",
-           text:"Your message has been sent to me successfully.\n I will revert to you as soon as possible",
+           to:mailData.email,
+           subject:"From Vridha Mitra",
+           text:"Your alert has been sent to your guardian successfully.",
        },
        );
     }

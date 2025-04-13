@@ -1,11 +1,13 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./user.css";
 import { useSelector } from "react-redux";
 import Headerr from "../components/Headerr";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 function User() {
-    const navigate = useNavigate()
+  const navigate = useNavigate()
 
   const emailValue = useSelector((store) => store.email)
   // useEffect(() => {
@@ -13,38 +15,54 @@ function User() {
   //     navigate("/login")
   //   }
   // }, []);
-  const [latitude,setLat]= useState("");
-  const [longitude,setLong]= useState("");
-  const [loading,setLoading]=useState(false);
+  const [latitude, setLat] = useState("");
+  const [longitude, setLong] = useState("");
+  const [loading, setLoading] = useState(false);
   console.log(emailValue)
 
-  const getLoc=()=>{
-    if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(success,error);
+  const getLoc = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error);
     } else {
-        console.log("Not Possible");
+      console.log("Not Possible");
     }
-}
+  }
 
-function success(position) {
+  function success(position) {
 
-  setLoading(true);
-  
-  const lat=position.coords.latitude.toString();
-  const long=position.coords.longitude.toString();
+    setLoading(true);
 
-  setLat(lat);
-  setLong(long);
-  const newsrc="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d104128.91649944017!2d"+latitude+"!3d"+longitude+"!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1743491925268!5m2!1sen!2sin"
-  document.getElementsByClassName("gmap").src=newsrc
-  console.log(lat+" "+long)
+    const lat = position.coords.latitude.toString();
+    const long = position.coords.longitude.toString();
 
-  console.log(newsrc)
-}
+    setLat(lat);
+    setLong(long);
+    const newsrc = "https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d104128.91649944017!2d" + latitude + "!3d" + longitude + "!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1743491925268!5m2!1sen!2sin"
+    document.getElementsByClassName("gmap").src = newsrc
+    console.log(lat + " " + long)
 
-function error() {
-  alert("Sorry, no position available.");
-}
+    console.log(newsrc)
+    let data;
+    try {
+      const fetchLoc = async () => {
+         data = await axios.post("http://localhost:3000/update-location/", {
+          email: emailValue.email,
+          lat: latitude,
+          long: longitude,
+        })
+      console.log(data)
+      toast.success(data.data.message)
+      }
+      fetchLoc()
+
+    } catch (error) {
+      toast.error(error.response.data.message)
+    }
+  }
+
+  function error() {
+    alert("Sorry, no position available.");
+  }
 
   return (
     <div className="health-app">
@@ -87,66 +105,66 @@ function error() {
           </Link>
 
           <Link to='/user-home/medicine-reminder'>
-          <div className="feature-card">
-            <div className="card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="61" height="61" viewBox="0 0 61 61" fill="none">
-              <path d="M26.607 10.2327L31.391 15.0244H26.4C21.52 15.0244 16.8399 16.9568 13.3892 20.3965C9.93856 23.8362 8 28.5014 8 33.3659H12.6C12.6 29.7175 14.0539 26.2186 16.6419 23.6388C19.2299 21.0591 22.74 19.6098 26.4 19.6098H31.391L26.584 24.4015L29.85 27.6341L40.2 17.3171L36.957 14.0844L29.85 7L26.607 10.2327ZM54 31.0732V54H17.2V31.0732H54ZM49.4 46.1132V38.9829C48.0174 38.1825 46.868 37.0367 46.065 35.6585H25.135C24.332 37.0367 23.1826 38.1825 21.8 38.9829V46.1132C23.1628 46.9135 24.2956 48.0506 25.089 49.4146H46.065C46.8711 48.0449 48.0203 46.9073 49.4 46.1132ZM35.6 47.122C33.6956 47.122 32.15 45.07 32.15 42.5366C32.15 40.0032 33.6956 37.9512 35.6 37.9512C37.5044 37.9512 39.05 40.0032 39.05 42.5366C39.05 45.07 37.5044 47.122 35.6 47.122Z" fill="url(#paint0_linear_35_26)" />
-              <defs>
-                <linearGradient id="paint0_linear_35_26" x1="31" y1="7" x2="31" y2="54" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#39ECF5" />
-                  <stop offset="1" stop-color="#218A8F" />
-                </linearGradient>
-              </defs>
-            </svg></div>
-            <h3>Medicine Reminder</h3>
-          </div>
+            <div className="feature-card">
+              <div className="card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="61" height="61" viewBox="0 0 61 61" fill="none">
+                <path d="M26.607 10.2327L31.391 15.0244H26.4C21.52 15.0244 16.8399 16.9568 13.3892 20.3965C9.93856 23.8362 8 28.5014 8 33.3659H12.6C12.6 29.7175 14.0539 26.2186 16.6419 23.6388C19.2299 21.0591 22.74 19.6098 26.4 19.6098H31.391L26.584 24.4015L29.85 27.6341L40.2 17.3171L36.957 14.0844L29.85 7L26.607 10.2327ZM54 31.0732V54H17.2V31.0732H54ZM49.4 46.1132V38.9829C48.0174 38.1825 46.868 37.0367 46.065 35.6585H25.135C24.332 37.0367 23.1826 38.1825 21.8 38.9829V46.1132C23.1628 46.9135 24.2956 48.0506 25.089 49.4146H46.065C46.8711 48.0449 48.0203 46.9073 49.4 46.1132ZM35.6 47.122C33.6956 47.122 32.15 45.07 32.15 42.5366C32.15 40.0032 33.6956 37.9512 35.6 37.9512C37.5044 37.9512 39.05 40.0032 39.05 42.5366C39.05 45.07 37.5044 47.122 35.6 47.122Z" fill="url(#paint0_linear_35_26)" />
+                <defs>
+                  <linearGradient id="paint0_linear_35_26" x1="31" y1="7" x2="31" y2="54" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#39ECF5" />
+                    <stop offset="1" stop-color="#218A8F" />
+                  </linearGradient>
+                </defs>
+              </svg></div>
+              <h3>Medicine Reminder</h3>
+            </div>
           </Link>
 
           <Link to='/user-home/travel'>
-          <div className="feature-card">
-            <div className="card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="61" height="61" viewBox="0 0 61 61" fill="none">
-              <path d="M30.5 10.1667H12.7083C10.686 10.1667 8.74659 10.97 7.31662 12.4C5.88666 13.8299 5.08331 15.7694 5.08331 17.7917V38.125C5.08331 40.1473 5.88666 42.0867 7.31662 43.5167C8.74659 44.9466 10.686 45.75 12.7083 45.75L10.1666 48.2917V50.8333H12.7083L17.7916 45.6737L22.875 45.75V33.0417H10.1666V15.25H33.0416V20.3333H38.125V17.7917C38.125 15.7694 37.3216 13.8299 35.8917 12.4C34.4617 10.97 32.5223 10.1667 30.5 10.1667ZM12.7083 35.5833C13.3824 35.5833 14.0289 35.8511 14.5055 36.3278C14.9822 36.8044 15.25 37.4509 15.25 38.125C15.25 38.7991 14.9822 39.4456 14.5055 39.9222C14.0289 40.3989 13.3824 40.6667 12.7083 40.6667C12.0342 40.6667 11.3877 40.3989 10.9111 39.9222C10.4344 39.4456 10.1666 38.7991 10.1666 38.125C10.1666 37.4509 10.4344 36.8044 10.9111 36.3278C11.3877 35.8511 12.0342 35.5833 12.7083 35.5833ZM52.2821 24.5525C51.9262 23.5358 50.9604 22.875 49.8167 22.875H31.5421C30.3729 22.875 29.4325 23.5358 29.0512 24.5525L25.4166 34.9987V49.0033C25.4166 49.9692 26.23 50.8333 27.1958 50.8333H28.7716C29.7375 50.8333 30.5 49.8675 30.5 48.9017V45.75H50.8333V48.9017C50.8333 49.8675 51.6212 50.8333 52.5871 50.8333H54.1375C55.1033 50.8333 55.9166 49.9692 55.9166 49.0033V34.9987L52.2821 24.5525ZM31.5421 25.4167H49.8167L52.4346 33.0417H28.9241L31.5421 25.4167ZM30.5 40.6667C29.8259 40.6667 29.1794 40.3989 28.7028 39.9222C28.2261 39.4456 27.9583 38.7991 27.9583 38.125C27.9583 37.4509 28.2261 36.8044 28.7028 36.3278C29.1794 35.8511 29.8259 35.5833 30.5 35.5833C31.1741 35.5833 31.8206 35.8511 32.2972 36.3278C32.7739 36.8044 33.0416 37.4509 33.0416 38.125C33.0416 38.7991 32.7739 39.4456 32.2972 39.9222C31.8206 40.3989 31.1741 40.6667 30.5 40.6667ZM50.8333 40.6667C50.1592 40.6667 49.5127 40.3989 49.0361 39.9222C48.5594 39.4456 48.2916 38.7991 48.2916 38.125C48.2916 37.4509 48.5594 36.8044 49.0361 36.3278C49.5127 35.8511 50.1592 35.5833 50.8333 35.5833C51.5074 35.5833 52.1539 35.8511 52.6305 36.3278C53.1072 36.8044 53.375 37.4509 53.375 38.125C53.375 38.7991 53.1072 39.4456 52.6305 39.9222C52.1539 40.3989 51.5074 40.6667 50.8333 40.6667Z" fill="url(#paint0_linear_35_31)" />
-              <defs>
-                <linearGradient id="paint0_linear_35_31" x1="30.5" y1="10.1667" x2="30.5" y2="50.8333" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#39ECF5" />
-                  <stop offset="1" stop-color="#218A8F" />
-                </linearGradient>
-              </defs>
-            </svg></div>
-            <h3>Travel</h3>
-          </div>
+            <div className="feature-card">
+              <div className="card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="61" height="61" viewBox="0 0 61 61" fill="none">
+                <path d="M30.5 10.1667H12.7083C10.686 10.1667 8.74659 10.97 7.31662 12.4C5.88666 13.8299 5.08331 15.7694 5.08331 17.7917V38.125C5.08331 40.1473 5.88666 42.0867 7.31662 43.5167C8.74659 44.9466 10.686 45.75 12.7083 45.75L10.1666 48.2917V50.8333H12.7083L17.7916 45.6737L22.875 45.75V33.0417H10.1666V15.25H33.0416V20.3333H38.125V17.7917C38.125 15.7694 37.3216 13.8299 35.8917 12.4C34.4617 10.97 32.5223 10.1667 30.5 10.1667ZM12.7083 35.5833C13.3824 35.5833 14.0289 35.8511 14.5055 36.3278C14.9822 36.8044 15.25 37.4509 15.25 38.125C15.25 38.7991 14.9822 39.4456 14.5055 39.9222C14.0289 40.3989 13.3824 40.6667 12.7083 40.6667C12.0342 40.6667 11.3877 40.3989 10.9111 39.9222C10.4344 39.4456 10.1666 38.7991 10.1666 38.125C10.1666 37.4509 10.4344 36.8044 10.9111 36.3278C11.3877 35.8511 12.0342 35.5833 12.7083 35.5833ZM52.2821 24.5525C51.9262 23.5358 50.9604 22.875 49.8167 22.875H31.5421C30.3729 22.875 29.4325 23.5358 29.0512 24.5525L25.4166 34.9987V49.0033C25.4166 49.9692 26.23 50.8333 27.1958 50.8333H28.7716C29.7375 50.8333 30.5 49.8675 30.5 48.9017V45.75H50.8333V48.9017C50.8333 49.8675 51.6212 50.8333 52.5871 50.8333H54.1375C55.1033 50.8333 55.9166 49.9692 55.9166 49.0033V34.9987L52.2821 24.5525ZM31.5421 25.4167H49.8167L52.4346 33.0417H28.9241L31.5421 25.4167ZM30.5 40.6667C29.8259 40.6667 29.1794 40.3989 28.7028 39.9222C28.2261 39.4456 27.9583 38.7991 27.9583 38.125C27.9583 37.4509 28.2261 36.8044 28.7028 36.3278C29.1794 35.8511 29.8259 35.5833 30.5 35.5833C31.1741 35.5833 31.8206 35.8511 32.2972 36.3278C32.7739 36.8044 33.0416 37.4509 33.0416 38.125C33.0416 38.7991 32.7739 39.4456 32.2972 39.9222C31.8206 40.3989 31.1741 40.6667 30.5 40.6667ZM50.8333 40.6667C50.1592 40.6667 49.5127 40.3989 49.0361 39.9222C48.5594 39.4456 48.2916 38.7991 48.2916 38.125C48.2916 37.4509 48.5594 36.8044 49.0361 36.3278C49.5127 35.8511 50.1592 35.5833 50.8333 35.5833C51.5074 35.5833 52.1539 35.8511 52.6305 36.3278C53.1072 36.8044 53.375 37.4509 53.375 38.125C53.375 38.7991 53.1072 39.4456 52.6305 39.9222C52.1539 40.3989 51.5074 40.6667 50.8333 40.6667Z" fill="url(#paint0_linear_35_31)" />
+                <defs>
+                  <linearGradient id="paint0_linear_35_31" x1="30.5" y1="10.1667" x2="30.5" y2="50.8333" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#39ECF5" />
+                    <stop offset="1" stop-color="#218A8F" />
+                  </linearGradient>
+                </defs>
+              </svg></div>
+              <h3>Travel</h3>
+            </div>
           </Link>
 
           {/* Second row with 2 cards */}
           <Link to='/user-home/pose-detection'>
-          <div className="feature-card">
-            <div className="card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58" fill="none">
-              <path d="M45.9167 2.41666L42.8717 9.06249L36.25 12.0833L42.8717 15.1283L45.9167 21.75L48.9375 15.1283L55.5834 12.0833L48.9375 9.06249M21.75 9.66666L15.7084 22.9583L2.41669 29L15.7084 35.0417L21.75 48.3333L27.7917 35.0417L41.0834 29L27.7917 22.9583M45.9167 36.25L42.8717 42.8717L36.25 45.9167L42.8717 48.9375L45.9167 55.5833L48.9375 48.9375L55.5834 45.9167L48.9375 42.8717" fill="url(#paint0_linear_35_34)" />
-              <defs>
-                <linearGradient id="paint0_linear_35_34" x1="29" y1="2.41666" x2="29" y2="55.5833" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#39ECF5" />
-                  <stop offset="1" stop-color="#218A8F" />
-                </linearGradient>
-              </defs>
-            </svg></div>
-            <h3>AI Posture tracking</h3>
-          </div>
+            <div className="feature-card">
+              <div className="card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58" fill="none">
+                <path d="M45.9167 2.41666L42.8717 9.06249L36.25 12.0833L42.8717 15.1283L45.9167 21.75L48.9375 15.1283L55.5834 12.0833L48.9375 9.06249M21.75 9.66666L15.7084 22.9583L2.41669 29L15.7084 35.0417L21.75 48.3333L27.7917 35.0417L41.0834 29L27.7917 22.9583M45.9167 36.25L42.8717 42.8717L36.25 45.9167L42.8717 48.9375L45.9167 55.5833L48.9375 48.9375L55.5834 45.9167L48.9375 42.8717" fill="url(#paint0_linear_35_34)" />
+                <defs>
+                  <linearGradient id="paint0_linear_35_34" x1="29" y1="2.41666" x2="29" y2="55.5833" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#39ECF5" />
+                    <stop offset="1" stop-color="#218A8F" />
+                  </linearGradient>
+                </defs>
+              </svg></div>
+              <h3>AI Posture tracking</h3>
+            </div>
           </Link>
           <Link to='/user-home/fundraiser'>
-          <div className="feature-card">
-            <div className="card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43" fill="none">
-              <path d="M37.4734 26.0533L40.3334 23.1933L37.4734 20.3333L30.3334 27.4733L13.1934 10.3333L20.3334 3.19334L17.4734 0.333344L14.6134 3.19334L11.7534 0.333344L7.47337 4.61334L4.61337 1.75334L1.75337 4.61334L4.61337 7.47334L0.333374 11.7533L3.19337 14.6133L0.333374 17.4733L3.19337 20.3333L10.3334 13.1933L27.4734 30.3333L20.3334 37.4733L23.1934 40.3333L26.0534 37.4733L28.9134 40.3333L33.1934 36.0533L36.0534 38.9133L38.9134 36.0533L36.0534 33.1933L40.3334 28.9133L37.4734 26.0533Z" fill="url(#paint0_linear_35_37)" />
-              <defs>
-                <linearGradient id="paint0_linear_35_37" x1="20.3334" y1="0.333344" x2="20.3334" y2="40.3333" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#39ECF5" />
-                  <stop offset="1" stop-color="#218A8F" />
-                </linearGradient>
-              </defs>
-            </svg></div>
-            <h3>Fundraiser</h3>
-          </div>
+            <div className="feature-card">
+              <div className="card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43" fill="none">
+                <path d="M37.4734 26.0533L40.3334 23.1933L37.4734 20.3333L30.3334 27.4733L13.1934 10.3333L20.3334 3.19334L17.4734 0.333344L14.6134 3.19334L11.7534 0.333344L7.47337 4.61334L4.61337 1.75334L1.75337 4.61334L4.61337 7.47334L0.333374 11.7533L3.19337 14.6133L0.333374 17.4733L3.19337 20.3333L10.3334 13.1933L27.4734 30.3333L20.3334 37.4733L23.1934 40.3333L26.0534 37.4733L28.9134 40.3333L33.1934 36.0533L36.0534 38.9133L38.9134 36.0533L36.0534 33.1933L40.3334 28.9133L37.4734 26.0533Z" fill="url(#paint0_linear_35_37)" />
+                <defs>
+                  <linearGradient id="paint0_linear_35_37" x1="20.3334" y1="0.333344" x2="20.3334" y2="40.3333" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#39ECF5" />
+                    <stop offset="1" stop-color="#218A8F" />
+                  </linearGradient>
+                </defs>
+              </svg></div>
+              <h3>Fundraiser</h3>
+            </div>
           </Link>
         </div>
-            
+
         <div className="documentation-link">
           <a href="#">Read Documentation &gt;&gt;</a>
         </div>

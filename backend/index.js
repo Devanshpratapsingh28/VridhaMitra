@@ -9,6 +9,7 @@ import { User } from "./models/user/user.js";
 import { Health } from "./models/user/user-health.js";
 import { Fundraiser } from "./models/user/user-funds.js";
 import { Travel } from "./models/user/user-travel.js";
+import { sendMail } from "./utils/sendAlert.js";
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -79,13 +80,13 @@ router.post("/login", async (req, res) => {
     }
   }
   if (type == "user") {
-    const admin = await Admin.findOne({ email });
-    if (!admin) {
+    const user = await User.findOne({ email });
+    if (!user) {
       res.status(404).json({
         message: "Not a Valid User. Please Sign-up instead!",
       });
     } else {
-      await Admin.findOneAndUpdate({ email: email }, { $set: { otp: otp } });
+      await User.findOneAndUpdate({ email: email }, { $set: { otp: otp } });
     }
     try {
       await sendOtp({
@@ -257,6 +258,7 @@ app.post("/otp-verify", async (req, res) => {
 
 app.post('/update-location',async(req,res)=>{
   const{email, lat, long}=req.body;
+  console.log(lat,long,email);
   try{
     await User.findOneAndUpdate(
       {email:email},
@@ -265,10 +267,26 @@ app.post('/update-location',async(req,res)=>{
         longitude: long
        } }
     )
+    const user=await User.findOne({email})
+    const name=user.name
+    const mobilenumber=user.mobileNumber
+    const guardianMail=user.guardianMail
+    
+    const newsrc = "https://maps.google.com/maps?q="+lat+","+long+"&z=15&output=embed"
+
+      await sendMail({
+          email,
+          name,
+          mobilenumber,
+          newsrc,
+          guardianMail,
+          subject:" ALERT! DANGER TO YOUR FAMILY ",
+      })
     res.json({
       message: "Data Received Successfully",
     });
-  } catch(e){
+    return;
+  } catch(error){
     console.error("Error not found user:", error);
     res.status(500).send({ message: "User not found" });
   }
