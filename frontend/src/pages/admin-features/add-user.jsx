@@ -1,9 +1,11 @@
 // admin-user.js
 import { useRef } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
 function AddUserForm() {
+    const navigate = useNavigate(); 
     const nameRef = useRef();
     const ageRef = useRef();
     const genderRef = useRef();
@@ -60,10 +62,29 @@ function AddUserForm() {
         recentLocRef.current.value = "";
     };
 
+    const handleBack = () => {
+        navigate('/admin-home'); 
+    };
+
     return (
         <>
             <ToastContainer />
             <h1>Add User</h1>
+            <button 
+                    onClick={handleBack}
+                    style={{
+                        padding: '8px 16px',
+                        backgroundColor: 'black',
+                        color: 'white',
+                        border: '1px solid #ccc',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        fontWeight: '500'
+                    }}
+                >
+                    ← Back
+                </button>
             <form onSubmit={handleFormSubmit}>
                 <input type="text" ref={nameRef} placeholder="Name" required />
                 <input type="text" ref={ageRef} placeholder="Age" required />
