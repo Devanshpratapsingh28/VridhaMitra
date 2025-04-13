@@ -1,0 +1,23 @@
+.bg-lights{
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.bg-lights1{
+    position: relative;  
+    top:12vh;
+    right:5vw;  
+}
+
+.bg-lights2{
+    position: relative;  
+    top:-100vh;
+    right:10vw;  
+}
+
+.bg-lights3{
+    position: relative;  
+    top:-150vh;
+    right:-10vw;  
+}

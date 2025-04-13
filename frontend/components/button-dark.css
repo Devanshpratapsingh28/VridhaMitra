@@ -1,0 +1,51 @@
+.button-dark-box {
+    cursor: pointer;
+  width: 10.5vw;
+  height: 5.5vh;
+
+  border-radius: 2.5vw;
+  border: 0px solid #fff;
+  background: #000;
+  box-shadow: 2px 2px 0px 0px #008cff inset ;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  animation: button-dark-box-outset 0.5s ease-in-out;
+
+}
+@keyframes button-dark-box-outset{
+    0%{
+  box-shadow: -2px -2px 0px 0px #008cff inset;
+    }
+    33%{
+  box-shadow: -2px 0px 0px 0px #008cff inset;
+    }
+    66%{
+  box-shadow: 2px 2px 0px 0px #008cff inset;
+    }
+    100%{
+  box-shadow: 2px 2px 0px 0px #008cff inset;
+    }
+}
+
+.button-dark-box:hover{
+  box-shadow: -2px -2px 0px 0px #008cff inset;
+  animation: button-dark-box-inset 0.5s ease-in-out;
+}
+
+@keyframes button-dark-box-inset{
+    0%{
+  box-shadow: 2px 2px 0px 0px #008cff inset;
+    }
+    33%{
+  box-shadow: -2px 2px 0px 0px #008cff inset;
+    }
+    66%{
+  box-shadow: -2px 0px 0px 0px #008cff inset;
+    }
+    100%{
+  box-shadow: -2px -2px 0px 0px #008cff inset;
+    }
+}

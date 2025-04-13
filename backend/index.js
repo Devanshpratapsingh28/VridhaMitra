@@ -271,8 +271,8 @@ app.post('/update-location',async(req,res)=>{
     const mobilenumber=user.mobileNumber
     const guardianMail=user.guardianMail
     
-    const newsrc = "https://maps.google.com/maps?q="+lat+","+long+"&z=15&output=embed"
-
+    const newsrc = "https://maps.google.com/maps?q="+lat+"+"+long+"&z=15&output=embed"
+    console.log(newsrc)
       await sendMail({
           email,
           name,

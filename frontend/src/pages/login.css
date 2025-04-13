@@ -1,0 +1,78 @@
+ body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+.login-bg {
+    background-color: #007bff;
+    height: 200px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.signup, .otp-verify {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    visibility: visible;
+}
+
+.otp-verify {
+    visibility: hidden;
+}
+
+.signup-heading, .otp-heading {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.signup-text, .otp-text {
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.signup-form, .otp-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-mobile, .input-otp {
+    margin-bottom: 15px;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.input-mobile:focus, .input-otp:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.button-signup, .button-otp {
+    padding: 10px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-signup:hover, .button-otp:hover {
+    background-color: #0056b3;
+}

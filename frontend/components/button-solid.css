@@ -1,0 +1,13 @@
+.button-solid-box{
+    cursor: pointer;
+    width: 10.5vw;
+    height: 5.5vh;
+  
+    border-radius: 2.5vw;
+    border: 0px solid #fff;
+    background: #008cff;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

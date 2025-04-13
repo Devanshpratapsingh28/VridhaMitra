@@ -3,6 +3,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import './signup.css'
 
 function Signup() {
 
@@ -58,7 +59,7 @@ function Signup() {
 
     return (
         <>
-            <h1>Login Page</h1>
+            <h1>Sign up</h1>
             <div className="image-form">
                 {/* enctype="multipart/form-data" */}
                 <form onSubmit={handleForm} action="">

@@ -18,45 +18,40 @@ const App = () => {
   }, []);
   console.log(msg);
 
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col items-center justify-center p-6">
-      <div className="max-w-4xl w-full bg-white rounded-2xl shadow-lg overflow-hidden">
-        {/* Header Section */}
-        <div className="bg-blue-600 p-8 text-white">
-          <h1 className="text-4xl font-bold mb-2">VridhaMitra</h1>
-          <div className="w-16 h-1 bg-blue-300 mb-6"></div>
+  return (<>
 
-          <h2 className="text-2xl font-semibold mb-4">The Perfect Combination of Volunteered Care and AI Detection.</h2>
-        </div>
+    <div className="home-logo">Vridha Mitra</div>
 
-        {/* Main Content */}
-        <div className="p-8">
-          <p className="text-gray-700 text-lg mb-8">
-            A single, intuitive app combining emergency response, daily health management using AI,
-            and community support—designed specifically for seniors and their caregivers.
-          </p>
-
-          <div className="flex flex-wrap gap-4">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
-              See all features ➤
-            </button>
-            <Link to='/sign-up'>
-            <button className="bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold py-3 px-6 rounded-lg transition duration-200">
-              Get Started
-            </button></Link>
-            <Link to='/login'>
-            <button className="bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold py-3 px-6 rounded-lg transition duration-200">
-              Log in
-            </button></Link>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="bg-gray-50 p-4 text-center text-gray-500 text-sm">
-          © {new Date().getFullYear()} Blue Pulse. All rights reserved.
-        </div>
-      </div>
+    <div className="heading-logo">
+      <span className="heading-the">The </span>
+      <span className="heading-perfect">Perfect </span>
+      <span className="heading-combination">combination of <br /></span>
+      <span className="heading-volunteered">Volunteered </span>
+      <span className="heading-carelogo"> </span>
+      <span className="heading-care">Care </span>
+      <span className="heading-and">and </span>
+      <span className="heading-ai">AI</span>
+      <div className="heading-detection">detection</div>
+      <div className="heading-ailogo"></div>
     </div>
+    <div className="small-text">A single, intuitive app combining emergency response,<br /> daily health management using AI,
+      and community support <br />designed specifically for seniors and their caregivers.</div>
+      <div className="svg-text">Get Started</div>
+    <svg className="svg-get" xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" fill="none">
+      <circle cx="84.5" cy="84.5" r="82" fill="url(#paint0_linear_4_29)" stroke="url(#paint1_linear_4_29)" stroke-width="5" />
+      <defs>
+        <linearGradient id="paint0_linear_4_29" x1="164" y1="-6.5" x2="5.00001" y2="164" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#39EBF5" stop-opacity="0.5" />
+          <stop offset="1" stop-color="#20666A" stop-opacity="0.9" />
+        </linearGradient>
+        <linearGradient id="paint1_linear_4_29" x1="164" y1="5" x2="5" y2="164" gradientUnits="userSpaceOnUse">
+          <stop stop-color="white" />
+          <stop offset="1" stop-color="#39ECF5" />
+        </linearGradient>
+      </defs>
+    </svg>
+  </>
+
   );
 };
 

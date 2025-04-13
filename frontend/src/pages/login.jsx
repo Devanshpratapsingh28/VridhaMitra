@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from 'react-toastify'
 import { emailActions } from '../../store/emailSlice';
-
+import './login.css'
 function Login() {
     const navigate = useNavigate()
     const dispatch=useDispatch()
@@ -92,7 +92,7 @@ function Login() {
             </div>
 
             <div className="signup">
-                <div className="signup-heading">Sign Up</div>
+                <div className="signup-heading">Log In</div>
                 <div className="signup-text"><br /> Enter your email address.</div>
                 <form action="" className="signup-form" onSubmit={handleSignup}>
                     <input type="email" ref={emailRef} className="input-mobile" placeholder='Your email here.' required />
