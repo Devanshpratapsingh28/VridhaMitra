@@ -44,7 +44,7 @@ const travelSchema = mongoose.Schema({
         required: true,
     },
     date:{
-        type: String,
+        type: Date,
         required: true,
     },
     travelMode:{

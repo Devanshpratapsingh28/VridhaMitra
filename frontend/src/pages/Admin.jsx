@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./admin.css";
 import Headerr from "../components/Headerr";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 function Admin() {
 
   const emailValue = useSelector((store) => store.email)
-
+  let usersArray=[]
   console.log(emailValue)
 
   // Sample data for the users table
@@ -18,6 +19,17 @@ function Admin() {
     { id: 5, status: "Do/MM/YYYY", recentCheck: 2 },
   ];
 
+  useEffect(()=>{
+    const fetchUsers=async()=>{
+      const usersData=await axios.post('http://127.0.0.1:3000/get-users',{
+        email:emailValue.email
+      })
+      console.log(usersData)
+      usersArray=usersData.usersArray;
+    }
+    fetchUsers()
+    console.log(usersArray)
+  },[])
   return (
     <div className="app">
       <Headerr/>
