@@ -25,10 +25,10 @@ VridhaMitra is an all-in-one solution designed to address the challenges faced b
 - **Database**: MongoDB for real-time data
 - **Authentication**: OTP based authentication
 
-### AI/ML
+### [AI/ML](https://github.com/07-priyanshu/VridhaMitra/blob/main/ML/readme.md)
 - **Dataset Used**: [Yoga-82](https://www.kaggle.com/datasets/akashrayhan/yoga-82)
 - **Keypoints Detection**: MediaPipe for extracting human posture keypoints from images
-- **Libraries**: Numpy, Pandas, Matplotlib, OpenCV, Pickle
+- **Libraries**: Numpy, Pandas, scikit-learn Matplotlib, OpenCV, Pickle
 - **Models Used**: Logistic Regression on Image Keypoints
 - **Backend**: FastAPI and Uvicorn
 
