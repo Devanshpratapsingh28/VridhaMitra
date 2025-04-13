@@ -42,7 +42,7 @@ function TravelForm() {
         formData.append("reimbursementAmount", reimbursementAmountRef.current.value);
 
         try {
-            const response = await axios.post("http://127.0.0.1:3000/travel", formData, {
+            const response = await axios.post("https://vridhamitra.onrender.com/travel", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             toast.success("Travel request submitted successfully!");

@@ -45,7 +45,7 @@ function User() {
     let data;
     try {
       const fetchLoc = async () => {
-         data = await axios.post("http://localhost:3000/update-location/", {
+         data = await axios.post("https://vridhamitra.onrender.com/update-location/", {
           email: emailValue.email,
           lat: latitude,
           long: longitude,

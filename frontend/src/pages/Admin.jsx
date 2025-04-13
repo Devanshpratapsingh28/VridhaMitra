@@ -29,7 +29,7 @@ function Admin() {
 
   useEffect(()=>{
     const fetchUsers=async()=>{
-      const usersData=await axios.post('http://127.0.0.1:3000/get-users',{
+      const usersData=await axios.post('https://vridhamitra.onrender.com/get-users',{
         email:emailValue.email
       })
       console.log(usersData)

@@ -34,7 +34,7 @@ function Signup() {
         formData.append("address", addressRef.current.value);
 
         try {
-            const response = await axios.post('http://127.0.0.1:3000/sign-up/', formData, {
+            const response = await axios.post('/sign-up/', formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             console.log("Data Uploaded Successfully", response.data.message);

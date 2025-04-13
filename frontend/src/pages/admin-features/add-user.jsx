@@ -37,7 +37,7 @@ function AddUserForm() {
         // formData.append("recentLoc", recentLocRef.current.value.split(","));
 
         try {
-            const response = await axios.post("http://127.0.0.1:3000/add-user/", formData, {
+            const response = await axios.post("https://vridhamitra.onrender.com/admin/add-user/", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             toast.success("User added successfully!");

@@ -38,7 +38,7 @@ function Login() {
         type = typeRef.current.value;
 
         try {
-            const { data } = await axios.post("http://localhost:3000/login/", {
+            const { data } = await axios.post("https://vridhamitra.onrender.com/login/", {
                 email,
                 type,
             })
@@ -57,7 +57,7 @@ function Login() {
         const type = typeRef.current.value;
         console.log(otp)
         try {
-            const { data } = await axios.post("http://localhost:3000/otp-verify/", {
+            const { data } = await axios.post("https://vridhamitra.onrender.com/otp-verify/", {
                 otp,
                 receiver: email,
                 type,

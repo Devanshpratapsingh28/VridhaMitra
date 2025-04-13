@@ -9,7 +9,7 @@ const App = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await axios.get("http://127.0.0.1:3000/", {
+      const data = await axios.get("https://vridhamitra.onrender.com/", {
         withCredentials: true
       });
       setMsg(data.data.message);

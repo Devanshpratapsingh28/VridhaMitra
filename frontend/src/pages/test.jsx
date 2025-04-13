@@ -7,7 +7,7 @@ const Test =() => {
   useEffect(() => {
     // Fetch the ID photo
     const email='saimjawed254@gmail.com'
-    axios.post(`http://localhost:3000/file`, {email}, {
+    axios.post(`https://vridhamitra.onrender.com/file`, {email}, {
       responseType: "arraybuffer", // Fetch binary data
     }).then((response) => {
       const blob = new Blob([response.data], { type: response.headers["content-type"] });
