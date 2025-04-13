@@ -41,7 +41,7 @@ function FundraiserForm() {
         formData.append("upiid", upiidRef.current.value);
 
         try {
-            const response = await axios.post("https://vridhamitra.onrender.com/fundraiser", formData, {
+            const response = await axios.post("http://127.0.0.1:3000/fundraiser", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             toast.success("Fundraiser created successfully!");

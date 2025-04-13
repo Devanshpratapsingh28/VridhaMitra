@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import './index.css'
 import Admin from './pages/Admin'
-import User from './pages/user'
+import User from './pages/User.jsx'
 import HealthForm from './pages/user-features/HealthForm'
 import Volunte from './pages/Volunte'
 import MedicineReminder from './pages/user-features/MedicineReminder'

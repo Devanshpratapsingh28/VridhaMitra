@@ -10,7 +10,7 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await axios.get("https://vridhamitra.onrender.com/", {
-        withCredentials: true
+        withCredentials: false
       });
       setMsg(data.data.message);
     }
