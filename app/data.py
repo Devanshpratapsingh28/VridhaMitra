@@ -7,13 +7,13 @@ import matplotlib.pyplot as plt
 import base64
 
 # Loading model, scaler, and label encoder
-with open('/Users/devanshpratap28/Documents/Python VS Code/VridhaMitra/ML/model.pkl', 'rb') as f:
+with open('/Users/devanshpratap28/Documents/Python VS Code/VridhaMitra/app/model.pkl', 'rb') as f:
     model = pkl.load(f)
 
-with open('/Users/devanshpratap28/Documents/Python VS Code/VridhaMitra/ML/scaler.pkl', 'rb') as f:
+with open('/Users/devanshpratap28/Documents/Python VS Code/VridhaMitra/app/scaler.pkl', 'rb') as f:
     scaler = pkl.load(f)
 
-with open('/Users/devanshpratap28/Documents/Python VS Code/VridhaMitra/ML/label_encoder.pkl', 'rb') as f:
+with open('/Users/devanshpratap28/Documents/Python VS Code/VridhaMitra/app/label_encoder.pkl', 'rb') as f:
     label_encoder = pkl.load(f)
 
 ANNOTATED_DIR = "Annotated_Image"
