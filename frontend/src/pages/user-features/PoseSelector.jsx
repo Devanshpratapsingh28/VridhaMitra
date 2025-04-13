@@ -3,6 +3,7 @@ import baddha_konasana from '../../assets/Baddha_konasana.jpg';
 import malasana from '../../assets/Malasana.jpeg';
 import vajrasana from '../../assets/Vajrasana.jpg';
 import balasana from '../../assets/Balasana.jpg';
+import coming_soon from '../../assets/coming_soon.jpeg';
 
 const PoseSelector = ({ selectedPose, onChange }) => {
   const poses = [
@@ -10,11 +11,12 @@ const PoseSelector = ({ selectedPose, onChange }) => {
     { id: 'malasana', name: 'Malasana', thumbnail: malasana },
     { id: 'vajrasana', name: 'Vajrasana', thumbnail: vajrasana },
     { id: 'balasana', name: 'Balasana', thumbnail: balasana },
+    { id: 'coming_soon', name: 'Coming Soon', thumbnail: coming_soon },
   ];
 
   return (
     <div style={{ padding: '20px',color: 'black', backgroundColor:'#4a6fa5', borderRadius: '8px'}}>
-      <h3>Currently the poses that this platform can detect are:</h3>
+      <h3>Currently the following poses are supported:</h3>
       <div style={{ 
         display: 'flex',
         flexDirection: 'row',

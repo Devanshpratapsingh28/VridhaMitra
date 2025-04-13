@@ -6,6 +6,7 @@ const CameraFeed = ({ isActive, onCapture }) => {
   const [capturedImage, setCapturedImage] = useState(null);
   const [uploadStatus, setUploadStatus] = useState('');
   const [poseName, setPoseName] = useState('');
+  const [annotatedImage, setAnnotatedImage] = useState(null);
 
   useEffect(() => {
     if (isActive) {
@@ -83,6 +84,9 @@ const CameraFeed = ({ isActive, onCapture }) => {
         setUploadStatus('Upload successful!');
         setPoseName(result.Pose_Name || 'Pose not detected');
         console.log("Upload response:", result);
+        if (result.annotated_image) {
+          setAnnotatedImage(`data:image/png;base64,${result.annotated_image}`);
+        }
       } else {
         setUploadStatus(`Upload failed: ${result.detail || 'Unknown error'}`);
       }
@@ -119,7 +123,7 @@ const CameraFeed = ({ isActive, onCapture }) => {
         <div className="captured-image">
           <h3>Captured Image:</h3>
           <img 
-            src={capturedImage.dataUrl} 
+            src={annotatedImage} 
             alt={`Captured at ${capturedImage.timestamp}`} 
           />
           <p>{capturedImage.timestamp}</p>
