@@ -95,6 +95,24 @@
   .submit-btn:hover {
     background-color: #2980b9;
   }
+
+  .back-btn {
+    width: 100%;
+    margin-top: 2px;
+    padding: 12px;
+    background-color: #3498db;
+    color: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .back-btn:hover {
+    background-color: #2980b9;
+  }
   
   /* Responsive adjustments */
   @media (max-width: 600px) {

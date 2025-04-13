@@ -42,7 +42,7 @@ createRoot(document.getElementById('root')).render(
           <Route path='/user-home/travel-requests' element={<TravelRequests />} />
           <Route path='/admin-home' element={<Admin />} />
           <Route path='/admin-home/add-user' element={<AddUserForm />} />
-
+          <Route path='/user-home/fund-raiser-requests' element={<FundRaiserRequests />} />
         </Routes>
         <ToastContainer theme="dark" position='top-right' />
 

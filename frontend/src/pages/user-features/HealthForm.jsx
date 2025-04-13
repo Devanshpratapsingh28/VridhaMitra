@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './healthform.css';
-
+import { useNavigate } from 'react-router-dom';
 const HealthForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     age:'',
@@ -26,7 +27,7 @@ const HealthForm = () => {
 
     try {
       const response = await axios.post('https://vridhamitra.onrender.com/user-health/', formData, {
-          withCredentials: false,   
+          withCredentials: true,   
       });
       console.log("Data Uploaded Successfully", response.data.message);
       // navigate("/login")
@@ -49,7 +50,9 @@ const HealthForm = () => {
         address: ''
       });
   };
-
+  const handleBack = () => {
+    navigate('/user-home'); 
+  };
   return (
     <div className="health-form-container">
       <div className="health-form-card">
@@ -167,6 +170,7 @@ const HealthForm = () => {
           </div>
           
           <button onSubmit={handleSubmit} type="submit" className="submit-btn">Sign Up</button>
+          <button type="button" onClick={handleBack} className="back-btn">Back</button>
         </form>
       </div>
     </div>
