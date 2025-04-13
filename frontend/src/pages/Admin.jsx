@@ -2,14 +2,13 @@ import React from "react";
 import "./admin.css";
 import Headerr from "../components/Headerr";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom"; 
 
 function Admin() {
+  const emailValue = useSelector((store) => store.email);
+  const navigate = useNavigate(); 
+  console.log(emailValue);
 
-  const emailValue = useSelector((store) => store.email)
-
-  console.log(emailValue)
-
-  // Sample data for the users table
   const users = [
     { id: 1, status: "Do/MM/YYYY", recentCheck: 2 },
     { id: 2, status: "Do/MM/YYYY", recentCheck: 2 },
@@ -18,43 +17,55 @@ function Admin() {
     { id: 5, status: "Do/MM/YYYY", recentCheck: 2 },
   ];
 
+  const handleAddUser = () => {
+    navigate('/admin-home/add-user'); 
+  };
+
   return (
     <div className="app">
       <Headerr/>
       <main className="main-content">
         <div className="hero-section">
-          <h2>BluePulse:A new age of healthcare is here</h2>
+          <h2>BluePulse: A new age of healthcare is here</h2>
         </div>
-      <section className="section" id="section1">
-        <h3>Manage care for your loved ones</h3>
-        
-        <div className="table-container">
-          <table className="users-table">
-            <thead>
-              <tr>
-                <th>User</th>
-                <th>Status</th>
-                <th>Recent Check</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user) => (
-                <tr key={user.id}>
-                  <td>{user.id}</td>
-                  <td>{user.status}</td>
-                  <td>{user.recentCheck}</td>
+        <section className="section" id="section1">
+          <h3>Manage care for your loved ones</h3>
+          
+          <div className="table-container">
+            <table className="users-table">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Status</th>
+                  <th>Recent Check</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-          <button className="view-all">View all</button>
-        </div>
-      </section>
-</main>
+              </thead>
+              <tbody>
+                {users.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.id}</td>
+                    <td>{user.status}</td>
+                    <td>{user.recentCheck}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="table-actions"> 
+              <button className="view-all">View all</button>
+              <button 
+                className="add-user-btn" 
+                onClick={handleAddUser}
+              >
+                + Add User
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
       <section className="section">
         <h3>Recent Locations</h3>
         <div className="map-placeholder">
-        <img src="src\assets\map.jpg"/ >
+          <img src="src\assets\map.jpg" alt="Map placeholder" />
         </div>
         <div className="text"><p>Powered by Google Maps</p></div>
       </section>
