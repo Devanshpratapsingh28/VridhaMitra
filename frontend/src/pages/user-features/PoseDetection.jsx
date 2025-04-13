@@ -7,6 +7,7 @@ function PoseDetection() {
   const [selectedPose, setSelectedPose] = useState('tree');
   const [isCameraActive, setIsCameraActive] = useState(false); // Renamed for clarity
   const [capturedImages, setCapturedImages] = useState([]); // To store captured images
+  const [detectedPoseName, setDetectedPoseName] = useState(''); //added
 
   const handleImageCapture = (image) => {
     setCapturedImages(prev => [...prev, image]);
@@ -28,6 +29,7 @@ function PoseDetection() {
           <CameraFeed 
             isActive={isCameraActive}
             onCapture={handleImageCapture}
+            onPoseDetected={handlePoseDetected} // ✅ pass callback
           />
           
           <div className="controls">
@@ -44,6 +46,7 @@ function PoseDetection() {
           <PoseSelector 
             selectedPose={selectedPose}
             onChange={setSelectedPose}
+            detectedPose={detectedPoseName} // ✅ pass poseName
           />
         </div>
       </div>

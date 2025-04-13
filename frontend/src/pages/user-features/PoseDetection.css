@@ -219,3 +219,14 @@ html, body, #root {
     font-size: 0.9rem;
   }
 }
+
+@keyframes blink-green {
+  0% { border-color: green; }
+  50% { border-color: lightgreen; }
+  100% { border-color: green; }
+}
+
+.pose-card.detected-blink {
+  border: 3px solid green !important;
+  animation: blink-green 1s infinite;
+}

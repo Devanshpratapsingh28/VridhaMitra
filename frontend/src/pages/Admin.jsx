@@ -10,7 +10,6 @@ function Admin() {
   const navigate = useNavigate(); 
   console.log(emailValue);
 
-  const emailValue = useSelector((store) => store.email)
   let usersArray=[]
   console.log(emailValue)
 

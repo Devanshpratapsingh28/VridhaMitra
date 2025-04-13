@@ -84,6 +84,7 @@ const CameraFeed = ({ isActive, onCapture }) => {
         setUploadStatus('Upload successful!');
         setPoseName(result.Pose_Name || 'Pose not detected');
         console.log("Upload response:", result);
+        if (onPoseDetected) onPoseDetected(pose);
         if (result.annotated_image) {
           setAnnotatedImage(`data:image/png;base64,${result.annotated_image}`);
         }
